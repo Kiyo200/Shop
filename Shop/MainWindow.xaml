@@ -5,10 +5,215 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Shop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Background="#F5F0ED"
+        FontFamily="Arial"
+        Title="MainWindow" Height="550" Width="600">
+
+    <Window.Resources>
+
+        <Style x:Key="NavButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2B4162"/>
+            <Setter Property="Foreground" Value="#F5F0ED"/>
+            <Setter Property="FontFamily" Value="Bell MT"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="6" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#354F73"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#1A2E47"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="AdminButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#2B4162"/>
+            <Setter Property="FontFamily" Value="Bell MT"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="6"
+                                BorderThickness="1.5" BorderBrush="#2B4162">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2B4162"/>
+                                <Setter Property="Foreground" Value="#F5F0ED"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#1A2E47"/>
+                                <Setter Property="Foreground" Value="#F5F0ED"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
     <Grid>
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="23" FontWeight="Bold" Text="Szia"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
+        <!-- LEFT SIDEBAR -->
+        <Grid Grid.Column="0">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Margin="20,24,20,20">
+                    <TextBlock Text="Prime Pantry" FontSize="20" FontWeight="Bold"
+                               FontFamily="Bauhaus 93" Foreground="#2B4162"/>
+                    <TextBlock Text="Fülöp Máté, Tóth Kristóf Antal" FontSize="8"
+                               FontFamily="Bauhaus 93" Foreground="#2B4162"/>
+                </StackPanel>
 
+                <TextBlock DockPanel.Dock="Top" Text="Vásárló" Margin="15,6,20,5"
+                           Foreground="#354F73" FontSize="11" FontFamily="Bell MT" FontWeight="Bold"/>
+
+                <StackPanel DockPanel.Dock="Top" Margin="20,0,20,20">
+                    <Button Content="Főoldal"       Style="{StaticResource NavButtonStyle}" Margin="0,0,0,8" Click="MainPageButton_Click"/>
+                    <Button Content="Termék kereső" Style="{StaticResource NavButtonStyle}" Margin="0,0,0,8" Click="ProductsButton_Click"/>
+                    <Button Content="Kosár"         Style="{StaticResource NavButtonStyle}" Margin="0,0,0,8" Click="CartButton_Click"/>
+                </StackPanel>
+
+                <TextBlock DockPanel.Dock="Top" Text="Admin" Margin="15,6,20,5"
+                           Foreground="#354F73" FontSize="11" FontFamily="Bell MT" FontWeight="Bold"/>
+
+                <StackPanel DockPanel.Dock="Top" Margin="20,0,20,20">
+                    <Button Content="Termékek Hozzáadás" Style="{StaticResource AdminButtonStyle}" Margin="0,0,0,8" Click="AdminAddButton_Click"/>
+                    <Button Content="Termék Törlés"      Style="{StaticResource AdminButtonStyle}" Margin="0,0,0,8" Click="AdminDeleteButton_Click"/>
+                    <Button Content="Termék Szerkeztés"  Style="{StaticResource AdminButtonStyle}" Margin="0,0,0,0" Click="AdminEditButton_Click"/>
+                </StackPanel>
+            </DockPanel>
+        </Grid>
+
+        <!-- RIGHT CONTENT AREA -->
+        <Grid Grid.Column="1">
+
+            <Rectangle Width="1" HorizontalAlignment="Left" Fill="#D0C8C0"/>
+
+            <!-- FŐOLDAL (Home) -->
+            <StackPanel x:Name="PageHome" Margin="24,32,24,24" Visibility="Visible">
+                <TextBlock Text="Főoldal" FontSize="20" FontWeight="Bold"
+                           FontFamily="Bauhaus 93" Foreground="#2B4162" Margin="0,0,0,8"/>
+                <TextBlock Text="Üdvözöljük a Prime Pantry-ban!" FontSize="13"
+                           Foreground="#354F73" FontFamily="Bell MT" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <!-- TERMÉK KERESŐ (Products) -->
+            <StackPanel x:Name="PageProducts" Margin="24,32,24,24" Visibility="Collapsed">
+                <TextBlock Text="Termék kereső" FontSize="20" FontWeight="Bold"
+                           FontFamily="Bauhaus 93" Foreground="#2B4162" Margin="0,0,0,16"/>
+                <TextBlock Text="Keresés:" FontSize="11" Foreground="#354F73"
+                           FontFamily="Bell MT" FontWeight="Bold" Margin="0,0,0,6"/>
+                <TextBox Height="32" FontFamily="Bell MT" FontSize="12" Padding="8,4"
+                         Background="White" BorderBrush="#D0C8C0" BorderThickness="1"/>
+                <TextBlock Text="Találatok itt jelennek meg." FontSize="11" Foreground="#8A8075"
+                           FontFamily="Bell MT" Margin="0,12,0,0"/>
+            </StackPanel>
+
+            <!-- KOSÁR (Cart) -->
+            <StackPanel x:Name="PageCart" Margin="24,32,24,24" Visibility="Collapsed">
+                <TextBlock Text="Kosár" FontSize="20" FontWeight="Bold"
+                           FontFamily="Bauhaus 93" Foreground="#2B4162" Margin="0,0,0,16"/>
+                <TextBlock Text="A kosár jelenleg üres." FontSize="12" Foreground="#8A8075"
+                           FontFamily="Bell MT" FontStyle="Italic"/>
+            </StackPanel>
+
+            <!-- ADMIN: TERMÉKEK HOZZÁADÁS -->
+            <StackPanel x:Name="PageAdminAdd" Margin="24,32,24,24" Visibility="Collapsed">
+                <TextBlock Text="Termék Hozzáadás" FontSize="20" FontWeight="Bold"
+                           FontFamily="Bauhaus 93" Foreground="#2B4162" Margin="0,0,0,16"/>
+                <TextBlock Text="Termék neve:" FontSize="11" Foreground="#354F73"
+                           FontFamily="Bell MT" FontWeight="Bold" Margin="0,0,0,6"/>
+                <TextBox Height="32" FontFamily="Bell MT" FontSize="12" Padding="8,4"
+                         Background="White" BorderBrush="#D0C8C0" BorderThickness="1" Margin="0,0,0,12"/>
+                <TextBlock Text="Ár:" FontSize="11" Foreground="#354F73"
+                           FontFamily="Bell MT" FontWeight="Bold" Margin="0,0,0,6"/>
+                <TextBox Height="32" FontFamily="Bell MT" FontSize="12" Padding="8,4"
+                         Background="White" BorderBrush="#D0C8C0" BorderThickness="1" Margin="0,0,0,16"/>
+                <Button Content="Hozzáadás" Style="{StaticResource NavButtonStyle}" Width="120" HorizontalAlignment="Left"/>
+            </StackPanel>
+
+            <!-- ADMIN: TERMÉK TÖRLÉS -->
+            <StackPanel x:Name="PageAdminDelete" Margin="24,32,24,24" Visibility="Collapsed">
+                <TextBlock Text="Termék Törlés" FontSize="20" FontWeight="Bold"
+                           FontFamily="Bauhaus 93" Foreground="#2B4162" Margin="0,0,0,16"/>
+                <TextBlock Text="Termék neve:" FontSize="11" Foreground="#354F73"
+                           FontFamily="Bell MT" FontWeight="Bold" Margin="0,0,0,6"/>
+                <TextBox Height="32" FontFamily="Bell MT" FontSize="12" Padding="8,4"
+                         Background="White" BorderBrush="#D0C8C0" BorderThickness="1" Margin="0,0,0,16"/>
+                <Button Content="Törlés" Width="100" HorizontalAlignment="Left"
+                        Background="#C0392B" Foreground="White" Height="34" BorderThickness="0"
+                        FontFamily="Bell MT" FontSize="12" FontWeight="SemiBold" Cursor="Hand"/>
+            </StackPanel>
+
+            <!-- ADMIN: TERMÉK SZERKESZTÉS -->
+            <StackPanel x:Name="PageAdminEdit" Margin="24,32,24,24" Visibility="Collapsed">
+                <TextBlock Text="Termék Szerkesztés" FontSize="20" FontWeight="Bold"
+                           FontFamily="Bauhaus 93" Foreground="#2B4162" Margin="0,0,0,4"/>
+                <TextBlock Text="Adj kedvezményt egy termékre" FontSize="11"
+                           FontFamily="Bell MT" Foreground="#8A8075" Margin="0,0,0,20"/>
+
+                <TextBlock Text="Termék neve:" FontSize="11" Foreground="#354F73"
+                           FontFamily="Bell MT" FontWeight="Bold" Margin="0,0,0,6"/>
+                <TextBox x:Name="EditProductNameBox" Height="32" FontFamily="Bell MT" FontSize="12" Padding="8,4"
+                         Background="White" BorderBrush="#D0C8C0" BorderThickness="1" Margin="0,0,0,16"/>
+
+                <TextBlock Text="Jelenlegi ár:" FontSize="11" Foreground="#354F73"
+                           FontFamily="Bell MT" FontWeight="Bold" Margin="0,0,0,6"/>
+                <TextBlock x:Name="CurrentPriceLabel" Text="— Ft" FontSize="13"
+                           FontFamily="Bell MT" Foreground="#2B4162" Margin="0,0,0,16"/>
+
+                <TextBlock Text="Kedvezmény mértéke (%):" FontSize="11" Foreground="#354F73"
+                           FontFamily="Bell MT" FontWeight="Bold" Margin="0,0,0,6"/>
+                <Grid Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Slider x:Name="DiscountSlider" Grid.Column="0" Minimum="0" Maximum="100"
+                            TickFrequency="5" IsSnapToTickEnabled="True"
+                            ValueChanged="DiscountSlider_ValueChanged"
+                            VerticalAlignment="Center" Margin="0,0,12,0"/>
+                    <Border Grid.Column="1" Background="#2B4162" CornerRadius="6"
+                            Width="52" Height="32">
+                        <TextBlock x:Name="DiscountLabel" Text="0%" FontSize="13" FontWeight="Bold"
+                                   FontFamily="Bell MT" Foreground="#F5F0ED"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </Grid>
+
+                <TextBlock Text="Kedvezményes ár:" FontSize="11" Foreground="#354F73"
+                           FontFamily="Bell MT" FontWeight="Bold" Margin="0,0,0,6"/>
+                <TextBlock x:Name="DiscountedPriceLabel" Text="— Ft" FontSize="16" FontWeight="Bold"
+                           FontFamily="Bell MT" Foreground="#2B7A3A" Margin="0,0,0,20"/>
+
+                <Button Content="Kedvezmény Mentése" Style="{StaticResource NavButtonStyle}"
+                        Width="160" HorizontalAlignment="Left" Click="SaveDiscount_Click"/>
+            </StackPanel>
+
+        </Grid>
     </Grid>
 </Window>
